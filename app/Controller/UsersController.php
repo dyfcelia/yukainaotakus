@@ -30,18 +30,18 @@ class UsersController extends AppController {
              if($find[0]['User']['role']!=='u'){
                 $result = false;
                 return $result;
-           
+
              }else{
                 $data =[$find[0]['User']['id'],$find[0]['User']['username']];
-                  
+
             }
 
          }else{   //数组不为空 且第二个也不是空 ==搜出了两个用户
-    
+
              if($find[0]['User']['role']=='u' && $find[1]['User']['role']=='u'){ // 1&2合法
                 $data=[$find[0]['User']['id'],$find[0]['User']['username'],$find[1]['User']['id'],$find[1]['User']['username']];
                // debug($data);
-                 
+
                 $result="<table border=\"1\"  class=\"col-6\" ><tr><td>"."用户ID:"."$data[0]"."</td><td>"."用户名:"."$data[1]"."</td>
                 <td><button class='doLevelUp' id=\"$data[0]\">升级</button></td></tr>
                 <tr><td>"."用户ID:"."$data[2]"."</td><td>"."用户名:"."$data[3]"."</td>
@@ -50,10 +50,10 @@ class UsersController extends AppController {
 
                 }elseif($find[0]['User']['role']!='u'&& $find[1]['User']['role']=='u'){      //1不行 2合法
                      $data=[$find[1]['User']['id'],$find[1]['User']['username']];
-                  
+
                     }elseif($find[0]['User']['role']=='u'&& $find[1]['User']['role']!='u'){     //1合法 2不行
                         $data=[$find[0]['User']['id'],$find[0]['User']['username']];
-                
+
                  }else{
                 $result = false ;
                 return $result;
@@ -62,7 +62,7 @@ class UsersController extends AppController {
             $result="<table border=\"1\"  class=\"col-6\" ><tr><td>"."用户ID:"."$data[0]"."</td><td>"."用户名:"."$data[1]"."</td>
                <td><button class='doLevelUp' id=\"$data[0]\">升级</button></td></tr></table>";
                return $result;
-            
+
             }
 
 
@@ -75,12 +75,12 @@ class UsersController extends AppController {
         }else{
             $id=$this->request->query('id');
             $find=$this->User->findById($id);
-        
+
             $find['User']= array('id' => $id, 'role' => 'sr');
             if($this->User->save($find)) {
                 $result =  new BasicResult(true, "权限已变更为sr");
                 return json_encode($result);
-             }  
+             }
              $result =  new BasicResult(false, "迷之错误");
 		     return json_encode($result);
 
@@ -91,14 +91,13 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 $this->Flash->success('登陆成功');
-                //debug($_SESSION);
-              
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller' => 'Users','action' => 'index',$this->Auth->user('id')));
+
                 //return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('用户名或者密码有误，请重新输入'));
         }
-    }   
+    }
 
     public function logout() {
          return $this->redirect($this->Auth->logout());
@@ -123,9 +122,9 @@ class UsersController extends AppController {
         $this->set("list",$aaa);
        }else{}
 
-       
-        
-       
+
+
+
 
         // $list = $this->Collection->find('all');
 		// $this->set("list", $list);
@@ -164,7 +163,7 @@ class UsersController extends AppController {
     public function edit($id = null) {
         $this->User->id = $id;
         $this->loadModel('UserInfo');
-        
+
         if (!$this->User->exists()) {
             throw new NotFoundException(__('无效数据'));
         }
