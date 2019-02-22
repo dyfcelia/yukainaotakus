@@ -85,7 +85,7 @@ App::import('Vendor','platform');
             new Chart("pie1").ratePie(95),{animation:false};
 
         </script>
-<h1>这是朕的天下</h1>
+<h1>这是郑的天下</h1>
     
     <p>
         <font size="4">yutaku好评度</font> 
