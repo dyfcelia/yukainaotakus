@@ -3,11 +3,19 @@
 
 App::import('Vendor','util');
 App::import('Vendor','platform');
-//debug($gameinfo);
 ?>
- 
+
 <div class="row">
-  <div class="col-3">一张图片
+    <div class="col-12" style="margin-top:20px;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/GameInfo/?page=<?= $page ?>">游戏一览</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+        </nav>
+    </div>
+  <div class="col-3">
+
   <!-- <?php 
    // echo $this->Html->image("gameInfo/game_img_{$gameinfo['GameInfo']['id']}_1.jpg",[
         //'style'=>'max-height:240px;max-width:240px;'
@@ -66,7 +74,7 @@ App::import('Vendor','platform');
             ?></p>
             </div>
         </div> 
-     <p><?php echo " 游戏简介： ". h($gameinfo['GameInfo']['introduction']); ?></p>
+     <p><?php echo " 游戏简介： ". $gameinfo['GameInfo']['introduction']; ?></p>
 
   </div>
   <div class="col-1.5">
@@ -77,7 +85,7 @@ App::import('Vendor','platform');
             new Chart("pie1").ratePie(95),{animation:false};
 
         </script>
-
+<h1>这是朕的天下</h1>
     
     <p>
         <font size="4">yutaku好评度</font> 
