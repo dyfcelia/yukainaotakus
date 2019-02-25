@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="77e7b8cb-c3ce-4232-b82a-ea5e12933a4e" name="yutaku" url="http://35.187.211.219">
+        <fileTransfer host="35.187.211.219" port="22" privateKey="P:\GoogleDrive\tools\ssh\dooun\id_rsa" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

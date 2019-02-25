@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="gcloud(dooun.net)">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="yutaku">
     <serverData>
       <paths name="gcloud(dooun.net)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/yukainaotakus.dooun.net/public_html" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="learn.dooun.net(gcloud)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="school.dooun.net">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="task.dooun.net(gcloud)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="yutaku">
         <serverdata>
           <mappings>
             <mapping deploy="/var/www/yukainaotakus.dooun.net/public_html" local="$PROJECT_DIR$" web="/" />
