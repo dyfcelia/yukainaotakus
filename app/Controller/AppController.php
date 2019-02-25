@@ -55,12 +55,13 @@ class AppController extends Controller {
                 'Form' => array(
                     'passwordHasher' => 'Blowfish'
                 )
-            )
+            ),
+			'authError' =>'ログインしてください'
         )
     );
     public function isAuthorized($user) {
         // Admin 可以访问每个动作
-        if (isset($user['role']) && $user['role'] === 'admin') {
+        if (isset($user['role']) && ($user['role'] === 'admin' || $user['role']=='ssr')) {
             return true;
         }
     
@@ -69,7 +70,11 @@ class AppController extends Controller {
     }
 
     public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
+//        $this->Auth->allow( 'view');
+		$this->userInfo=$this->Auth->user();
+		$this->set('userInfo',$this->userInfo);
+
+//		echo $this->userInfo = $this->Auth->user("id");
     }
     //...
 }

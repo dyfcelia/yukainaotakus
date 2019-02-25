@@ -93,10 +93,11 @@ class UsersController extends AppController {
                 $this->Flash->success('登陆成功');
                 return $this->redirect(array('controller' => 'Users','action' => 'index',$this->Auth->user('id')));
 
-                //return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('用户名或者密码有误，请重新输入'));
-        }
+			return $this->redirect($this->Auth->redirectUrl());
+
+		}
     }
 
     public function logout() {

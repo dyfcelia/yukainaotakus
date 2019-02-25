@@ -5,10 +5,8 @@ class GameInfoController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow();
-
-
-    }
+        $this->Auth->allow( 'view','index');
+	}
     public function isAuthorized($user) {
         // 所有注册的用户都能够添加文章
         if ($this->action === 'add') {
@@ -18,9 +16,6 @@ class GameInfoController extends AppController {
         // 文章的所有者能够编辑和删除它
         if (in_array($this->action, array('edit', 'delete'))) {
             $id = (int) $this->request->params['pass'][0];
-            // if ($this->GameInfo->isOwnedBy($id, $user['id'])) {
-            //     return true;
-            // }
         }
 
         return parent::isAuthorized($user);
@@ -102,7 +97,8 @@ class GameInfoController extends AppController {
 
             $this->set('show', $a);
 
-
+//		$this->set("page",$page);
+		$this->Session->write("page",$page);
 
         $this->loadModel("Like");
 
@@ -219,7 +215,11 @@ $badlist[$badgameId]=$badlikeCount;
         if (!$gameinfo) {
             throw new NotFoundException(__('Invalid gameinfo'));
         }
+
+		$page = $this->Session->read('page');
         $this->set('gameinfo', $gameinfo);
+		$this->set('page', $page);
+
     }
 
     public function add() {
@@ -241,7 +241,7 @@ $badlist[$badgameId]=$badlikeCount;
                'type' => $_POST['data']['GameInfo']['type'],
                'release_date' => $_POST['data']['GameInfo']['release_date'],
                'publisher' => $_POST['data']['GameInfo']['publisher'],
-               'score' => $_POST['data']['GameInfo']['score'],
+//               'score' => $_POST['data']['GameInfo']['score'],
                'introduction' => $_POST['data']['GameInfo']['introduction'],
                'platform' => $decNum,
                'price' => $_POST['data']['GameInfo']['price'],
