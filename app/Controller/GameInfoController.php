@@ -44,6 +44,144 @@ class GameInfoController extends AppController {
 		// 执行数据操作
 	}
 
+	public function tenki() {
+        $add = $_GET['add'];
+
+        $data = [
+            'add'=>$add,
+            'tenki'=>'晴转多云'
+        ];
+        echo json_encode($data);
+
+
+        sleep(2);
+
+    }
+         
+    
+       public function Search(){
+            //抓名字
+// $test=$this->request->data("game_info_game_name");
+
+        if($this->request->is('post')){
+            //Formの値を取得
+            $title=$this->request->data['Search']['寻找游戏'];
+        
+      
+
+        
+                
+                $gameInfoList=$this->GameInfo->find("all",
+                array('conditions'=>array('OR'=>array(
+                'game_name LIKE'=>"%".$title.'%',
+                'publisher LIKE'=>"%".$title.'%',
+                'release_date LIKE'=>"%".$title.'%',
+                'score LIKE'=>"%".$title.'%',
+                'type LIKE'=>"%".$title.'%',
+                
+                )
+            )));
+        
+        //debug($gameform);
+    
+        
+        
+            }
+                
+              
+               $this->set('gameInfoList',$gameInfoList);
+              
+            
+ }
+
+
+ public function allSearch(){
+    //抓名字
+// $test=$this->request->data("game_info_game_name");
+
+if($this->request->is('post')){
+    //Formの値を取得
+
+
+    $Search=$this->request->data['allSearch']['游戏名字'];
+    
+    $Search1=$this->request->data['allSearch']['游戏类型'];
+
+    $Search2=$this->request->data['allSearch']['游戏发行商'];
+    
+    $Search3=$this->request->data['allSearch']['游戏发售时间'];
+
+    $Search4=$this->request->data['allSearch']['游戏评分'];
+    //测试拿到值没有 
+    // print_r($Search);
+    // print_r($Search1);
+    // print_r($Search2);
+    // print_r($Search3);
+    // print_r($Search4);
+   // die;
+        
+       
+    $gameInfoallList=$this->GameInfo->find("all",
+    array('conditions'=>array('AND'=>array(  'OR' => array(
+        array( 'game_name LIKE'=>"%".$Search.'%')),
+
+    'AND' => array(
+        'OR' => array(
+            array('type LIKE'=>"%".$Search1.'%'))
+  
+        
+
+
+    ),
+
+    
+    'AND' => array(
+        array(
+            'OR' => array(
+                array('release_date LIKE'=>"%".$Search2.'%'))
+
+    )),
+
+    'AND' => array(
+        'OR' => array(
+            array('release_date LIKE'=>"%".$Search3.'%'))
+  
+        
+
+
+     ),
+
+    'AND' => array(
+        'OR' => array(
+            array('score LIKE'=>"%".$Search4.'%'))
+  
+        
+
+
+    )
+
+
+))));
+  
+
+   
+        //   
+        
+    // ));
+
+//debug($gameform);
+
+
+
+    }
+        
+      
+       $this->set('gameInfoallList',$gameInfoallList);
+      
+    
+}
+
+
     public function index(){
 
         if ($this->request->is('GET')){

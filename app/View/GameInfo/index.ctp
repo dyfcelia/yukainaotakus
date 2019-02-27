@@ -126,9 +126,67 @@ App::import('Vendor', 'platform');
 			return false;
 		});
 	});
+$(document).ready(function(){
+
+  $(".btn2").click(function(){
+    $("#pa").slideDown();
+  });
+});
 </script>
 
-<div class="alert"></div>
+    <div class="container">
+	<h1>2019游戏最佳排行 <span style="color:red;"> *HOT</span></h1>
+	<div class="alert"></div>
+
+	
+	<div><span>
+	<!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 -->
+	<?php   
+
+	
+	echo $this->Form->create('Search',['url'=>'search']);
+
+	echo $this->Form->input('寻找游戏');
+ //   debug($gameform);
+	echo $this->Form->end('検索');
+
+	
+
+	?></span>
+	</div>
+	</form>
+
+	<!-- <div id="flip">高级搜索</div>
+<div id="panel">类型<input type ="text" name ="typeid">
+								发行商<input type ="text" name=faxingshang>
+		</div>
+	<div> -->	
+
+	<!-- <input type="text" name=search id="search" placeholder="查找游戏信息"  action="GameInfo.php" method="get">
+	<span>         </span>
+	<button type="submit" value="gameform" class="btn btn-primary">查找</button> -->
+	
+	<!-- </div> -->
+
+	<body>
+	<button class="btn2">高级搜索</button>
+	<div id="pa" style="display:none">
+	<!-- 游戏类型  <input type ="text" name ="type"><br><br>
+	游戏发行商<input type ="text" name=publisher><br><br>
+  游戏发售时间<input type = "text" name= "release_date"><br><br>
+	游戏评分<input type = "text" name= "score"> -->
+	<?php   
+
+	
+	echo $this->Form->create('allSearch',['url'=>'allsearch']);
+
+	echo $this->Form->input('游戏名字');
+	echo $this->Form->input('游戏类型');
+	echo $this->Form->input('游戏发行商');
+	echo $this->Form->input('游戏发售时间');
+	echo $this->Form->input('游戏评分');
+ //   debug($gameform);
+	echo $this->Form->end('検索');
 
 <div class="container-fluid">
     <h1 style="margin-top: 40px;margin-bottom: 40px;">2019游戏最佳排行 <span style="color:red;"> *HOT</span></h1>
