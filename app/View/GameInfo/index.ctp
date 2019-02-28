@@ -141,10 +141,16 @@ $(document).ready(function(){
 	
 	<div><span>
 	<!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 -->
-	<?php   
-
 	
-	echo $this->Form->create('Search',['url'=>'search']);
+	<?php   
+//debug($gameinfo);
+      //   $this->Form->create('HogeHoge', ['url' => ['action' => 'piyo_piyo'], 'type' => 'get'])
+	echo $this->Form->create('Search',
+	array('url'=>array('controller' => 'gameinfo', 'action' => 'index'), 
+		  'type'=>"get"
+		  )
+
+);
 
 	echo $this->Form->input('寻找游戏');
  //   debug($gameform);
@@ -178,8 +184,12 @@ $(document).ready(function(){
 	<?php   
 
 	
-	echo $this->Form->create('allSearch',['url'=>'allsearch']);
+echo $this->Form->create('allSearch',
+array('url'=>array('controller' => 'gameinfo', 'action' => 'index'), 
+	  'type'=>"get"
+	  )
 
+);
 	echo $this->Form->input('游戏名字');
 	echo $this->Form->input('游戏类型');
 	echo $this->Form->input('游戏发行商');

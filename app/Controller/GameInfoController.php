@@ -58,129 +58,6 @@ class GameInfoController extends AppController {
 
     }
          
-    
-       public function Search(){
-            //抓名字
-// $test=$this->request->data("game_info_game_name");
-
-        if($this->request->is('post')){
-            //Formの値を取得
-            $title=$this->request->data['Search']['寻找游戏'];
-        
-      
-
-        
-                
-                $gameInfoList=$this->GameInfo->find("all",
-                array('conditions'=>array('OR'=>array(
-                'game_name LIKE'=>"%".$title.'%',
-                'publisher LIKE'=>"%".$title.'%',
-                'release_date LIKE'=>"%".$title.'%',
-                'score LIKE'=>"%".$title.'%',
-                'type LIKE'=>"%".$title.'%',
-                
-                )
-            )));
-        
-        //debug($gameform);
-    
-        
-        
-            }
-                
-              
-               $this->set('gameInfoList',$gameInfoList);
-              
-            
- }
-
-
- public function allSearch(){
-    //抓名字
-// $test=$this->request->data("game_info_game_name");
-
-if($this->request->is('post')){
-    //Formの値を取得
-
-
-    $Search=$this->request->data['allSearch']['游戏名字'];
-    
-    $Search1=$this->request->data['allSearch']['游戏类型'];
-
-    $Search2=$this->request->data['allSearch']['游戏发行商'];
-    
-    $Search3=$this->request->data['allSearch']['游戏发售时间'];
-
-    $Search4=$this->request->data['allSearch']['游戏评分'];
-    //测试拿到值没有 
-    // print_r($Search);
-    // print_r($Search1);
-    // print_r($Search2);
-    // print_r($Search3);
-    // print_r($Search4);
-   // die;
-        
-       
-    $gameInfoallList=$this->GameInfo->find("all",
-    array('conditions'=>array('AND'=>array(  'OR' => array(
-        array( 'game_name LIKE'=>"%".$Search.'%')),
-
-    'AND' => array(
-        'OR' => array(
-            array('type LIKE'=>"%".$Search1.'%'))
-  
-        
-
-
-    ),
-
-    
-    'AND' => array(
-        array(
-            'OR' => array(
-                array('release_date LIKE'=>"%".$Search2.'%'))
-
-    )),
-
-    'AND' => array(
-        'OR' => array(
-            array('release_date LIKE'=>"%".$Search3.'%'))
-  
-        
-
-
-     ),
-
-    'AND' => array(
-        'OR' => array(
-            array('score LIKE'=>"%".$Search4.'%'))
-  
-        
-
-
-    )
-
-
-))));
-  
-
-   
-        //   
-        
-    // ));
-
-//debug($gameform);
-
-
-
-    }
-        
-      
-       $this->set('gameInfoallList',$gameInfoallList);
-      
-    
-}
-
 
     public function index(){
 
@@ -225,14 +102,105 @@ if($this->request->is('post')){
         }
 
 		$this->set('pagenation', $pagenation = getPage($page,$itemCount));
-		$this->set('gameinfo', $this->GameInfo->find('all', array('limit' => $pagenation['itemPerPage'],  'page' =>$page)));
+		$this->set('gameinfo', $this->GameInfo->find('all', array(
+            'limit' => $pagenation['itemPerPage'],
+            'page' =>$page,
+        
+            )
+        ));
+
+       if($this->request->is('GET')){
+
+        $this->loadModel("GameInfo");
+        //Formの値を取得
+      $title=$this->request->query['寻找游戏'];
+//debug($title);
+ // debug($this->request->query);
+
+            $gameinfocha=$this->GameInfo->find("all",
+         
+            
+            array('conditions'=>array('OR'=>array(
+            'game_name LIKE'=>"%".$title.'%',
+            'publisher LIKE'=>"%".$title.'%',
+            'release_date LIKE'=>"%".$title.'%',
+            'score LIKE'=>"%".$title.'%',
+            'type LIKE'=>"%".$title.'%',
+            
+            )
+            
+        )));
+
+        }else{echo "erro";}
+// debug(111111);
+           $this->set('gameinfo',$gameinfocha);
+          
+        if($this->request->is('GET')){
+            $this->loadModel("GameInfo");
+            $ass1=$this->request->query['游戏名字'];
+            $ass2=$this->request->query['游戏类型'];
+            $ass3=$this->request->query['游戏发行商'];
+            $ass4=$this->request->query['游戏发售时间'];
+            $ass5=$this->request->query['游戏评分'];
+//debug($this->request->query);
+
+
+                $gameInfoallList=$this->GameInfo->find("all",
+                array('conditions'=>array('AND'=>array( 'OR' => array( 
+                    array( 'game_name LIKE'=>"%".$ass1.'%')),
+
+                'AND' => array(
+                    'OR' => array(
+                        array('type LIKE'=>"%".$ass2.'%')
+                    )
+                    
+
+
+                ),
+
+
+                'AND' => array(
+                    array(
+                        'OR' => array(
+                            array('release_date LIKE'=>"%".$ass3.'%'))
+
+                )),
+
+                'AND' => array(
+                    'OR' => array(
+                        array('release_date LIKE'=>"%".$ass4.'%'))
+
+                    
+
+
+                ),
+
+                'AND' => array(
+                    'OR' => array(
+                        array('score LIKE'=>"%".$ass5.'%'))
+
+                    
+
+
+                )
+
+
+                ))));
+
+
+                $this->set('gameinfo',$gameInfoallList);
+        }
+
+
+
 
 
             $this->loadModel("Collection");
             $a=$this->Collection->find('list',array(
                 'fields'=>array('id','game_id'),
                 'conditions'=>array('user_id'=>$this->Auth->user("id"))));
-
+    
+                
             $this->set('show', $a);
 
 //		$this->set("page",$page);
@@ -242,7 +210,11 @@ if($this->request->is('post')){
 
 
 
-        $l=$this->Like->find('all');
+        $this->loadModel("like");
+        
+  
+      
+        $l=$this->like->find('all');
      // debug($l);
 
      //计数 点赞 计数 点赞计数 点赞计数 点赞计数 点赞计数 点赞计数 点赞计数 点赞计数 点赞计数 点赞
@@ -252,17 +224,17 @@ if($this->request->is('post')){
          )
         ,
             'conditions'=>array(
-
-
+            
+               
                 'user_iine'=>'1'
-
+           
 
             ),
             'group' => 'game_id'
-        ));
+        ));       
 $gllist=[];
         foreach ($b as $v) {
-
+           
  // debug($v);
 $gameId=$v['Like']['game_id'];
 //debug($gameId);
@@ -278,7 +250,7 @@ $gllist[$gameId]=$likeCount;
 
 
 
-//bad like 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩 计数点踩
+
 
 $badlike=$this->Like->find('all',array(
     'fields' =>array('Like.game_id',
@@ -324,25 +296,7 @@ $badlist[$badgameId]=$badlikeCount;
     //debug($c);
 
     $this->set('downlike', $c);
-        // $c=$this->Like->find('all');
-        //         debug($c);
 
-
-        //拿到数据资源 这是个空的
-//  $db = $this->getDataSource();
-// //debug($db);
-//  //取到所有
-
-// //  App::uses('ConnectionManager', 'Like');
-// // $db = ConnectionManager::getDataSource("index");
-// debug($db);
-// //debug($db->query('Get', array('test')));
-// $db->fetchAll(
-//     'SELECT * from `like` where user_iine=:user_iine',
-//     array('user_iine' => '1')
-// );
-// debug($db);
-        }
 
     public function view($id = null) {
         if (!$id) {
