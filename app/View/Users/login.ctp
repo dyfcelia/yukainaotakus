@@ -40,7 +40,7 @@ $this->Html->css('pages/login', ['inline'=>false]);
 		));
 		?>
         <div id="formFooter">
-            <a class="underlineHover" href="#">忘记了密码?没关系，密码找回还没做ｂ（￣▽￣）ｄ</a>
+            <a class="underlineHover text-dark" href="#">忘记了密码?没关系，密码找回还没做ｂ（￣▽￣）ｄ</a>
         </div>
 		<?php echo $this->Form->end(__('提交')); ?>
 

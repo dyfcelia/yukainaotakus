@@ -64,7 +64,7 @@ class AppController extends Controller {
         if (isset($user['role']) && ($user['role'] === 'admin' || $user['role']=='ssr')) {
             return true;
         }
-    
+
         // 默认不允许访问
         return false;
     }
@@ -73,6 +73,8 @@ class AppController extends Controller {
 //        $this->Auth->allow( 'view');
 		$this->userInfo=$this->Auth->user();
 		$this->set('userInfo',$this->userInfo);
+		// 设置网站根目录
+		$this->set("baseUrl",Router::url('/'));
 
 //		echo $this->userInfo = $this->Auth->user("id");
     }
