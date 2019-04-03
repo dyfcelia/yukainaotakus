@@ -98,8 +98,37 @@
 				?>
 
 
-			</li>
+            </li>
+            <li class="nav-item" style="margin-right:10px;">
+				<?php
+				echo $this->Form->create('Search', array(
+					'url' => array(
+						'controller' => 'GameInfo',
+						'action' => 'index'
+					),
+					'type' => "get",
+					'inputDefaults' => array(
+						'label' => false,
+						'div' => 'false',
+						'class' => 'form-control'
+					),
+					'class'=>'form-inline my-2 my-lg-0'
+				));
 
+				echo $this->Form->input('寻找游戏',[
+                    'class'=>'form-control mr-sm-2',
+                    'placeholder'=>"查找游戏，例如：动作"
+                ]);
+				echo $this->Form->input('查找',[
+					'label'=>false,
+					'div'=>false,
+					'type'=>'submit',
+					'class'=>'btn btn-outline-success my-2 my-sm-0'
+				]);
+
+				echo $this->Form->end();
+				?>
+            </li>
 
 			<li class="nav-item">
 				<?php if (!empty($this->Session->read('Auth.User.username'))) {
@@ -147,7 +176,8 @@
 
 <?php echo $this->element('common/header'); ?>
 <div class="container-fluid">
-	<?php echo $this->Flash->render(); ?><?php echo $this->fetch('content'); ?>
+	<?php echo $this->Flash->render(); ?>
+	<?php echo $this->fetch('content'); ?>
 </div>
 
 </body>

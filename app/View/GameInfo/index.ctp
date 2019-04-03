@@ -1,50 +1,12 @@
+<?php $this->Html->css('pages/GameInfo/index', ['inline' => false]); ?>
 <?php
+// TODO 不要再这里做import动作，放到控制器里
 App::import('Vendor', 'util');
 App::import('Vendor', 'platform');
+/** @var $userInfo array 用户信息 */
 ?>
 
-<!-- File: /app/View/Monsters/index.ctp -->
-<style>
 
-    .alert {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        min-width: 300px;
-        max-width: 600px;
-        transform: translate(-50%, -50%);
-        z-index: 99999;
-        text-align: center;
-        padding: 15px;
-        border-radius: 3px;
-    }
-
-    .alert-success {
-        color: #3c763d;
-        background-color: #dff0d8;
-        border-color: #d6e9c6;
-    }
-
-    .alert-info {
-        color: #31708f;
-        background-color: #d9edf7;
-        border-color: #bce8f1;
-    }
-
-    .alert-warning {
-        color: #8a6d3b;
-        background-color: #fcf8e3;
-        border-color: #faebcc;
-    }
-
-    .alert-danger {
-        color: #a94442;
-        background-color: #f2dede;
-        border-color: #ebccd1;
-    }
-
-</style>
 
 <script>
 	// 当点击带有“data-ajax=link”的标签时，触发ajax事件
@@ -133,88 +95,24 @@ App::import('Vendor', 'platform');
 			return false;
 		});
 	});
-$(document).ready(function(){
-
-  $(".btn2").click(function(){
-    $("#pa").slideDown();
-  });
-});
 </script>
 
-    <div class="container">
-	<h1>2019游戏最佳排行 <span style="color:red;"> *HOT</span></h1>
-	<div class="alert"></div>
-
-	
-	<div><span>
-	<!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 -->
-	
-	<?php   
-//debug($gameinfo);
-      //   $this->Form->create('HogeHoge', ['url' => ['action' => 'piyo_piyo'], 'type' => 'get'])
-	echo $this->Form->create('Search',
-	array('url'=>array('controller' => 'gameinfo', 'action' => 'index'), 
-		  'type'=>"get"
-		  )
-
-);
-
-	echo $this->Form->input('寻找游戏');
- //   debug($gameform);
-	echo $this->Form->end('検索');
-
-	
-
-	?></span>
-	</div>
-	</form>
-
-	<!-- <div id="flip">高级搜索</div>
-<div id="panel">类型<input type ="text" name ="typeid">
-								发行商<input type ="text" name=faxingshang>
-		</div>
-	<div> -->	
-
-	<!-- <input type="text" name=search id="search" placeholder="查找游戏信息"  action="GameInfo.php" method="get">
-	<span>         </span>
-	<button type="submit" value="gameform" class="btn btn-primary">查找</button> -->
-	
-	<!-- </div> -->
-
-	<body>
-	<button class="btn2">高级搜索</button>
-	<div id="pa" style="display:none">
-	<!-- 游戏类型  <input type ="text" name ="type"><br><br>
-	游戏发行商<input type ="text" name=publisher><br><br>
-  游戏发售时间<input type = "text" name= "release_date"><br><br>
-	游戏评分<input type = "text" name= "score"> -->
-	<?php   
-
-	
-echo $this->Form->create('allSearch',
-array('url'=>array('controller' => 'gameinfo', 'action' => 'index'), 
-	  'type'=>"get"
-	  )
-
-);
-	echo $this->Form->input('游戏名字');
-	echo $this->Form->input('游戏类型');
-	echo $this->Form->input('游戏发行商');
-	echo $this->Form->input('游戏发售时间');
-	echo $this->Form->input('游戏评分');
- //   debug($gameform);
-	echo $this->Form->end('検索');
-
 <div class="container-fluid">
-    <h1 style="margin-top: 40px;margin-bottom: 40px;">2019游戏最佳排行 <span style="color:red;"> *HOT</span></h1>
+    <h1>2019游戏最佳排行 <span style="color:red;"> *HOT</span></h1>
+    <div class="alert"></div>
 
+
+    <div>
+        <!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 --><!-- 分页查询 -->
+
+
+    </div>
     <!--最外层框架-->
     <div class="row">
 
         <!--左边部分，信息介绍-->
         <div class="col-lg-9">
 			<?php
-			//
 			foreach ($gameinfo as $GameInfo):
 				//拿到id
 				$gameid = $GameInfo['GameInfo']['id'];
@@ -225,18 +123,23 @@ array('url'=>array('controller' => 'gameinfo', 'action' => 'index'),
 						echo $this->Html->image("gameInfo/game_{$GameInfo['GameInfo']['outer_key']}_main.jpg", [
 							'style' => 'width:100%'
 						]);
-						echo "<br>";
-
-						echo $this->Html->link('上传图片', array(
-							'controller' => 'GameInfo',
-							'action' => 'uploadfile',
-							'?' => ['game_info_id' => $GameInfo['GameInfo']['id']]
-						));
-
+						// 只在用户登录的情况下显示
+                        if ($userInfo){
+                            echo $this->Html->link('上传图片', array(
+                                'controller' => 'GameInfo',
+                                'action' => 'uploadfile',
+                                '?' => ['game_info_id' => $GameInfo['GameInfo']['id']]
+                            ));
+						}
 						?>
 
                         <br>
-
+						<?php
+						echo $this->Html->link('查看', array(
+							'action' => 'view',
+							$GameInfo['GameInfo']['id']
+						));
+						?>
 
 						<?php
 						echo $this->Html->link('编辑', array(
